@@ -9,8 +9,6 @@ session_start();
 // Usage example
 $user = new User();
 
-// checks if the button is clicked and the form is submitted. If true, run the createUser() function from our User class
-// Then pass in an array of data to the createUser class since createUser accepts an array of data
 if (isset($_POST['submit'])) {
     $user_info = $user->login([
         'username' => $_POST['username'],
@@ -24,11 +22,6 @@ if (isset($_POST['submit'])) {
         $message = 'Invalid username or password';
     }
 }
-
-// if(isset($_SESSION['user']) && !empty($_SESSION['user'])) {
-//     header('Location: index.php');
-//     exit;
-// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,18 +30,96 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Inline style for bold/solid buttons and form layout -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .message {
+            color: red;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-link {
+            display: inline-block;
+            margin-top: 10px;
+            width: 48%;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
     <form method="POST" action="login.php">
         <h1>Login</h1>
-        <?php echo isset($message) ? $message : ''; ?>
-        <input type="username" name="username" id="" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit" name="submit" value="Submit">
-        <a href="register.php" class="btn btn-primary">Register</a>
-        <a href="index.php" class="btn btn-primary">Home</a>
+        <?php if (isset($message)): ?>
+            <div class="message"><?php echo htmlspecialchars($message); ?></div>
+        <?php endif; ?>
+        
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        
+        <input type="submit" name="submit" value="Login" class="btn">
+
+        <div style="display: flex; justify-content: space-between;">
+            <a href="register.php" class="btn btn-link">Register</a>
+            <a href="index.php" class="btn btn-link">Home</a>
+        </div>
     </form>
 </body>
 

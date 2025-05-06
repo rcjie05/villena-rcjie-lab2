@@ -6,11 +6,8 @@ use Aries\Dbmodel\Models\User;
 
 session_start();
 
-// Usage example
 $user = new User();
 
-// checks if the button is clicked and the form is submitted. If true, run the createUser() function from our User class
-// Then pass in an array of data to the createUser class since createUser accepts an array of data
 if (isset($_POST['submit'])) {
     $registered = $user->register([
         'first_name' => $_POST['first_name'],
@@ -19,12 +16,6 @@ if (isset($_POST['submit'])) {
         'password' => $_POST['password']
     ]);
 }
-
-// if(isset($_SESSION['user']) && !empty($_SESSION['user'])) {
-//     header('Location: index.php');
-//     exit;
-// }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,22 +24,120 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- Same CSS as login page -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            width: 100%;
+            max-width: 400px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .message {
+            color: green;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            //SUBMIT
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-link {
+            //login/home
+            display: inline-block;
+            width: 45%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-link:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+    </style>
 </head>
 
 <body>
     <form method="POST" action="register.php">
         <h1>Register</h1>
-        <?php echo isset($registered) ? 'You have successfully registered! You may now login' : ''; ?>
-        <input type="text" name="first_name" id="" placeholder="First Name">
-        <input type="text" name="last_name" id="" placeholder="Last Name">
-        <input type="username" name="username" id="" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit" name="submit" value="Submit">
-        <a href="login.php" class="btn btn-primary">Login</a>
-        <a href="index.php" class="btn btn-primary">Home</a>
 
+        <?php if (isset($registered)): ?>
+            <div class="message">You have successfully registered! You may now login.</div>
+        <?php endif; ?>
+
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <input type="submit" name="submit" value="Submit" class="btn">
+
+        <div class="btn-row">
+            <a href="login.php" class="btn-link">Login</a>
+            <a href="index.php" class="btn-link">Home</a>
+        </div>
     </form>
 </body>
+
 
 </html>
